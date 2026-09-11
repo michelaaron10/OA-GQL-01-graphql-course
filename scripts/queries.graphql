@@ -1,9 +1,15 @@
+fragment UserInfo on User {
+  id
+  name
+}
+
 query Basic {
   events {
     id
     title
-    date
-    organizer { id name }
+    period { start end }
+    organizer { ...UserInfo }
+    participants { ...UserInfo }
   }
-  users { id name }
+  users { ...UserInfo }
 }

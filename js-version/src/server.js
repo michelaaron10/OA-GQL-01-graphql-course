@@ -5,11 +5,16 @@ const typeDefs = gql`
     id: ID
     name: String
   }
+  type DateRange {
+    start: String
+    end: String
+  }
   type Event {
     id: ID
     title: String
-    date: String
+    period: DateRange
     organizer: User
+    participants: [User]
   }
   type Query {
     users: [User]
@@ -19,12 +24,25 @@ const typeDefs = gql`
 
 const users = [
   { id: "1", name: "Alice" },
-  { id: "2", name: "Bob" }
+  { id: "2", name: "Bob" },
+  { id: "3", name: "Michel" },
 ];
 
 const events = [
-  { id: "101", title: "Soirée jeux", date: "2025-10-01", organizer: users[0] },
-  { id: "102", title: "Hackathon", date: "2025-11-15", organizer: users[1] }
+  {
+    id: "101",
+    title: "Soirée jeux",
+    period: { start: "2025-10-01", end: "2025-10-01" },
+    organizer: users[0],
+    participants: [users[0], users[1], users[2]]
+  },
+  {
+    id: "102",
+    title: "Hackathon",
+    period: { start: "2025-11-15", end: "2025-11-17" },
+    organizer: users[1],
+    participants: [users[1], users[2]]
+  }
 ];
 
 const resolvers = {
